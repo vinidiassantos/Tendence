@@ -2,13 +2,14 @@ import os
 import logging
 import jwt
 import pandas as pd
-from flask import Flask, jsonify, send_from_directory, request, abort
+from flask import Flask, jsonify, request, abort, render_template
 from functools import lru_cache
 
 # 🔐 Configuração de segurança
 SECRET_KEY = 'sua_chave_secreta'  # Troque por algo seguro
 
-app = Flask(__name__, static_folder='tendence')
+# 🔧 Inicialização do app
+app = Flask(__name__, static_folder='frontend/static', template_folder='frontend/templates')
 
 # 🔍 Logs de acesso
 logging.basicConfig(level=logging.INFO)
@@ -29,18 +30,10 @@ def verificar_token():
     except jwt.InvalidTokenError:
         abort(401, description='Token inválido')
 
-# 🔹 Rotas de frontend
+# 🔹 Rota principal (renderiza HTML)
 @app.route('/')
 def index():
-    return send_from_directory(app.static_folder, 'index.html')
-
-@app.route('/script.js')
-def script():
-    return send_from_directory(app.static_folder, 'script.js')
-
-@app.route('/style.css')
-def style():
-    return send_from_directory(app.static_folder, 'style.css')
+    return render_template('index.html')
 
 # 🔹 Cache para leitura de CSV
 @lru_cache(maxsize=5)
