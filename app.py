@@ -2,14 +2,17 @@ import os
 import logging
 import jwt
 import pandas as pd
-from flask import Flask, jsonify, request, abort, render_template
+from flask import Flask, jsonify, request, abort, send_from_directory
 from functools import lru_cache
 
 # 🔐 Configuração de segurança
 SECRET_KEY = 'sua_chave_secreta'  # Troque por algo seguro
 
+# 📁 Caminho absoluto para a pasta frontend
+FRONTEND_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), 'frontend'))
+
 # 🔧 Inicialização do app
-app = Flask(__name__, static_folder='frontend/static', template_folder='frontend/templates')
+app = Flask(__name__, static_folder=FRONTEND_FOLDER)
 
 # 🔍 Logs de acesso
 logging.basicConfig(level=logging.INFO)
@@ -30,10 +33,19 @@ def verificar_token():
     except jwt.InvalidTokenError:
         abort(401, description='Token inválido')
 
-# 🔹 Rota principal (renderiza HTML)
+# 🔹 Rota principal (serve index.html)
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return send_from_directory(FRONTEND_FOLDER, 'index.html')
+
+# 🔹 Rotas para arquivos estáticos
+@app.route('/script.js')
+def script():
+    return send_from_directory(FRONTEND_FOLDER, 'script.js')
+
+@app.route('/style.css')
+def style():
+    return send_from_directory(FRONTEND_FOLDER, 'style.css')
 
 # 🔹 Cache para leitura de CSV
 @lru_cache(maxsize=5)
@@ -84,4 +96,4 @@ def unauthorized(e):
 # 🔹 Execução do servidor
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
-    app.run(debug=False, host='0.0.0.0', port=port)
+    app.run(debug=True, host='0.0.0.0', port=port)
