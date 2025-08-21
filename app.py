@@ -50,3 +50,10 @@ def investimento_natalidade():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
     app.run(debug=False, host='0.0.0.0', port=port)
+
+# 🔹 Rota para estados
+@app.route('/api/estados')
+def estados():
+    print("🔍 Lendo estados.csv...")
+    df = pd.read_csv('tendence/data/processed/estados.csv')
+    return jsonify(df.to_dict(orient='records'))
