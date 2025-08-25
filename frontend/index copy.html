@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tendence</title>
+
+  <!-- 🔤 Tipografia moderna -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- 🎨 Estilos -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 📊 Chart.js para gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>📊 Tendence</h1>
+  </header>
+
+  <!-- 🔘 Botões de alternância -->
+  <section class="controls">
+    <button onclick="mostrarGrafico('ibge')">Código IBGE</button>
+    <button onclick="mostrarGrafico('indicadores')">Indicadores de Saúde</button>
+    <button onclick="mostrarGrafico('investimento')">Investimento por Estado</button>
+    <button onclick="mostrarGrafico('comparativo')">Comparar Investimento vs Natalidade</button>
+    <button onclick="exportarGrafico()">📤 Exportar Gráfico</button>
+  </section>
+
+  <!-- 🔽 Filtro de estado -->
+  <section class="filtro">
+    <label for="estadoSelect">Filtrar por estado:</label>
+    <select id="estadoSelect">
+      <option value="todos">Todos</option>
+    </select>
+  </section>
+
+  <!-- 📊 Área de gráficos -->
+  <main class="graficos">
+    <canvas id="chart" width="800" height="400" style="display: block;"></canvas>
+    <canvas id="chart2" width="800" height="400" style="display: none;"></canvas>
+    <canvas id="chartInvestimento" width="800" height="400" style="display: none;"></canvas>
+    <canvas id="chartComparativo" width="800" height="400" style="display: none;"></canvas>
+  </main>
+
+  <!-- ⚙️ Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>

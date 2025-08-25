@@ -1,10 +1,7 @@
-<script>
 // 🔹 Alternância entre gráficos
 function mostrarGrafico(tipo) {
   document.getElementById('chart').style.display = tipo === 'ibge' ? 'block' : 'none';
   document.getElementById('chart2').style.display = tipo === 'indicadores' ? 'block' : 'none';
-  document.getElementById('chartInvestimento').style.display = tipo === 'investimento' ? 'block' : 'none';
-  document.getElementById('chartComparativo').style.display = tipo === 'comparativo' ? 'block' : 'none';
 }
 
 // 🔹 Exportar gráfico como imagem
@@ -92,6 +89,7 @@ function atualizarGraficoIndicadores(data) {
 
   const ctx2 = document.getElementById('chart2').getContext('2d');
 
+  // Destroi gráfico anterior se existir
   if (window.indicadoresChart) {
     window.indicadoresChart.destroy();
   }
@@ -142,7 +140,6 @@ function atualizarGraficoIndicadores(data) {
   });
 }
 
-// 🔹 Gráfico 3 — Investimento por Estado ao longo dos anos
 fetch('/api/dados-integrados')
   .then(res => res.json())
   .then(data => {
@@ -179,47 +176,9 @@ fetch('/api/dados-integrados')
     });
   });
 
-// 🔹 Gráfico 4 — Comparativo Investimento vs Natalidade
-fetch('/api/investimento-natalidade')
-  .then(res => res.json())
-  .then(data => {
-    const estados = data.map(d => d.estado);
-    const investimento = data.map(d => d.investimento_total);
-    const natalidade = data.map(d => d.natalidade);
-
-    const ctx = document.getElementById('chartComparativo').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: estados,
-        datasets: [
-          {
-            label: 'Investimento Total (R$ milhões)',
-            data: investimento,
-            backgroundColor: 'rgba(75, 192, 192, 0.6)'
-          },
-          {
-            label: 'Natalidade (por mil hab.)',
-            data: natalidade,
-            backgroundColor: 'rgba(255, 99, 132, 0.6)'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Investimento vs Natalidade por Estado'
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-  })
-  .catch(error => console.error('Erro ao carregar dados comparativos:', error));
-</script>
+  function mostrarGrafico(tipo) {
+  document.getElementById('chart').style.display = tipo === 'ibge' ? 'block' : 'none';
+  document.getElementById('chart2').style.display = tipo === 'indicadores' ? 'block' : 'none';
+  document.getElementById('chartInvestimento').style.display = tipo === 'investimento' ? 'block' : 'none';
+  document.getElementById('chartComparativo').style.display = tipo === 'comparativo' ? 'block' : 'none';
+}
