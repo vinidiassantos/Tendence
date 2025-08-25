@@ -8,7 +8,7 @@ from functools import lru_cache
 # 🔐 Configuração de segurança
 SECRET_KEY = 'sua_chave_secreta'  # Troque por algo seguro
 
-# 📁 Caminho absoluto para a pasta frontend
+# 📁 Caminho para a pasta frontend
 FRONTEND_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), 'frontend'))
 
 # 🔧 Inicialização do app
@@ -33,12 +33,12 @@ def verificar_token():
     except jwt.InvalidTokenError:
         abort(401, description='Token inválido')
 
-# 🔹 Rota principal (serve index.html)
+# 🔹 Rota principal
 @app.route('/')
 def index():
     return send_from_directory(FRONTEND_FOLDER, 'index.html')
 
-# 🔹 Rotas para arquivos estáticos
+# 🔹 Arquivos estáticos
 @app.route('/script.js')
 def script():
     return send_from_directory(FRONTEND_FOLDER, 'script.js')
@@ -97,4 +97,3 @@ def unauthorized(e):
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
     app.run(debug=True, host='0.0.0.0', port=port)
-
