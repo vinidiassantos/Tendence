@@ -1,46 +1,86 @@
+/* 🌐 Reset básico */
+* {
+  box-sizing: border-box;
+}
+
+/* 🧱 Layout base */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+/* 🏷️ Título principal */
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+/* 🔘 Botões */
+button {
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* 🔽 Select dropdown */
+select {
+  padding: 8px 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/* 📊 Gráficos */
+canvas {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin: 20px auto;
+  display: block;
+  max-width: 100%;
+}
+
+/* 📦 Cards */
 .card {
-  background: #fff;
+  background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: box-shadow 0.3s ease;
+  margin: 20px auto;
+  max-width: 800px;
 }
 
-.card:hover {
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+/* 📐 Centralização */
+.center {
+  text-align: center;
 }
 
-.card-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #2c3e50;
-}
+/* 📱 Responsividade */
+@media (max-width: 768px) {
+  button {
+    width: 100%;
+    margin: 8px 0;
+  }
 
-.card-content canvas {
-  width: 100%;
-  max-height: 250px;
-}
-
-.card-result {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #3498db;
-  display: flex;
-  justify-content: space-between;
-}
-
-.card-insights {
-  list-style: disc;
-  padding-left: 20px;
-  font-size: 0.95rem;
-  color: #555;
-}
-.dashboard {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
 }
