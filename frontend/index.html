@@ -1,50 +1,41 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tendence</title>
+<main class="dashboard">
+  <div class="card">
+    <h2>Código IBGE</h2>
+    <canvas id="chartIbge"></canvas>
+    <p class="resultado">Média dos códigos: <span id="resultadoIbge">---</span></p>
+    <ul class="insights">
+      <li>Estados com maior concentração de códigos altos.</li>
+      <li>Distribuição uniforme entre regiões.</li>
+    </ul>
+  </div>
 
-  <!-- 🔤 Tipografia moderna -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <div class="card">
+    <h2>Indicadores de Saúde</h2>
+    <canvas id="chartIndicadores"></canvas>
+    <p class="resultado">Cobertura SUS média: <span id="resultadoIndicadores">---</span></p>
+    <ul class="insights">
+      <li>Investimento correlacionado com natalidade.</li>
+      <li>Estados com baixa cobertura têm alta mortalidade.</li>
+    </ul>
+  </div>
 
-  <!-- 🎨 Estilos -->
-  <link rel="stylesheet" href="style.css">
+  <div class="card">
+    <h2>Investimento por Estado</h2>
+    <canvas id="chartInvestimento"></canvas>
+    <p class="resultado">Total investido: <span id="resultadoInvestimento">---</span></p>
+    <ul class="insights">
+      <li>Sudeste lidera em investimento acumulado.</li>
+      <li>Oscilações anuais indicam instabilidade orçamentária.</li>
+    </ul>
+  </div>
 
-  <!-- 📊 Chart.js para gráficos -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-  <header>
-    <h1>📊 Tendence</h1>
-  </header>
-
-  <!-- 🔘 Botões de alternância -->
-  <section class="controls">
-    <button onclick="mostrarGrafico('ibge')">Código IBGE</button>
-    <button onclick="mostrarGrafico('indicadores')">Indicadores de Saúde</button>
-    <button onclick="mostrarGrafico('investimento')">Investimento por Estado</button>
-    <button onclick="mostrarGrafico('comparativo')">Comparar Investimento vs Natalidade</button>
-    <button onclick="exportarGrafico()">📤 Exportar Gráfico</button>
-  </section>
-
-  <!-- 🔽 Filtro de estado -->
-  <section class="filtro">
-    <label for="estadoSelect">Filtrar por estado:</label>
-    <select id="estadoSelect">
-      <option value="todos">Todos</option>
-    </select>
-  </section>
-
-  <!-- 📊 Área de gráficos -->
-  <main class="graficos">
-    <canvas id="chart" width="800" height="400" style="display: block;"></canvas>
-    <canvas id="chart2" width="800" height="400" style="display: none;"></canvas>
-    <canvas id="chartInvestimento" width="800" height="400" style="display: none;"></canvas>
-    <canvas id="chartComparativo" width="800" height="400" style="display: none;"></canvas>
-  </main>
-
-  <!-- ⚙️ Scripts -->
-  <script src="script.js"></script>
-</body>
-</html>
+  <div class="card">
+    <h2>Investimento vs Natalidade</h2>
+    <canvas id="chartComparativo"></canvas>
+    <p class="resultado">Correlação estimada: <span id="resultadoComparativo">---</span></p>
+    <ul class="insights">
+      <li>Estados com maior investimento têm natalidade estável.</li>
+      <li>Regiões Norte e Nordeste mostram padrões distintos.</li>
+    </ul>
+  </div>
+</main>

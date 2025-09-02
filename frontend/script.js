@@ -13,13 +13,14 @@ function exportarGrafico() {
   link.click();
 }
 
-// 🔹 Gráfico IBGE
+// 🔹 IBGE
 fetch('/api/estados')
   .then(res => res.json())
   .then(data => {
     const estados = data.map(d => d.nome);
     const codigos = data.map(d => d.id);
     const ctx = document.getElementById('chart').getContext('2d');
+
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -32,9 +33,13 @@ fetch('/api/estados')
       },
       options: { responsive: true }
     });
+
+    // Resultado: média dos códigos IBGE
+    const mediaIbge = codigos.reduce((a, b) => a + b, 0) / codigos.length;
+    document.getElementById('resultadoIbge').textContent = mediaIbge.toFixed(2);
   });
 
-// 🔹 Gráfico Indicadores
+// 🔹 Indicadores
 fetch('/api/indicadores')
   .then(res => res.json())
   .then(data => {
@@ -53,6 +58,10 @@ fetch('/api/indicadores')
     });
 
     atualizarGraficoIndicadores(data);
+
+    // Resultado: média da cobertura SUS
+    const mediaCobertura = data.reduce((acc, d) => acc + d.cobertura_sus, 0) / data.length;
+    document.getElementById('resultadoIndicadores').textContent = mediaCobertura.toFixed(1) + '%';
   });
 
 function atualizarGraficoIndicadores(data) {
@@ -94,7 +103,7 @@ function atualizarGraficoIndicadores(data) {
   });
 }
 
-// 🔹 Gráfico Investimento por Estado
+// 🔹 Investimento por Estado
 fetch('/api/dados-integrados')
   .then(res => res.json())
   .then(data => {
@@ -120,9 +129,13 @@ fetch('/api/dados-integrados')
         }
       }
     });
+
+    // Resultado: total investido
+    const totalInvestido = data.reduce((acc, d) => acc + d.investimento_total, 0);
+    document.getElementById('resultadoInvestimento').textContent = 'R$ ' + totalInvestido.toLocaleString('pt-BR');
   });
 
-// 🔹 Gráfico Comparativo Investimento vs Natalidade
+// 🔹 Comparativo Investimento vs Natalidade
 fetch('/api/investimento-natalidade')
   .then(res => res.json())
   .then(data => {
@@ -130,6 +143,7 @@ fetch('/api/investimento-natalidade')
     const investimento = data.map(d => d.investimento_total);
     const natalidade = data.map(d => d.natalidade);
     const ctx = document.getElementById('chartComparativo').getContext('2d');
+
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -142,4 +156,17 @@ fetch('/api/investimento-natalidade')
           },
           {
             label: 'Natalidade',
-            data
+            data: natalidade,
+            backgroundColor: 'rgba(255, 159, 64, 0.6)'
+          }
+        ]
+      },
+      options: { responsive: true }
+    });
+
+    // Resultado: correlação simples (não estatística)
+    const somaInvestimento = investimento.reduce((a, b) => a + b, 0);
+    const somaNatalidade = natalidade.reduce((a, b) => a + b, 0);
+    const proporcao = somaNatalidade / somaInvestimento;
+    document.getElementById('resultadoComparativo').textContent = proporcao.toFixed(4);
+  });
